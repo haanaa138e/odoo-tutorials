@@ -10,6 +10,7 @@ export class PieChart extends Component {
     static props = {
         label: String,
         data: Object,
+	    onClick: Function,
     };
 
     setup() {
@@ -43,6 +44,13 @@ export class PieChart extends Component {
                         backgroundColor: color,
                     },
                 ],
+            },
+	        options: {
+                onClick: (event, elements) => {
+                    if (elements.length > 0 && this.props.onClick) {
+                        this.props.onClick();
+                    }
+                }
             },
         });
     }
