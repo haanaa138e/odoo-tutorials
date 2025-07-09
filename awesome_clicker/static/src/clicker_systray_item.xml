@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="awesome_clicker.ClickerSystray" >
+        <div class="o_systray_item" >
+	        Clicks:
+            <t t-esc="state.counter"/>
+	        <i class="fa fa-plus-square m-1 fa-lg" t-on-click="increment"></i>
+        </div>
+    </t>
+</templates>
+
+
