@@ -2,8 +2,8 @@
 <templates xml:space="preserve">
     <t t-name="awesome_clicker.ClickerClientAction">
 	    Clicks:
-	    <t t-esc="clickService.state.clicker"/>
-	    <button class="btn btn-primary m-3 " t-on-click="() => this.clickService.increment(9)">
+	    <t t-esc="this.clicker.state.clicker"/>
+	    <button class="btn btn-primary m-3 " t-on-click="() => this.clicker.increment(9)">
 		    increment
 	    </button>
     </t>

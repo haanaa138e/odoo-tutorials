@@ -1,6 +1,6 @@
 import { registry } from  "@web/core/registry";
-import { Component, useState } from "@odoo/owl";
-import { useService } from "@web/core/utils/hooks";
+import { Component } from "@odoo/owl";
+import {useClicker} from "./use_clicker";
 
 
 class ClickerClientAction extends Component {
@@ -9,7 +9,7 @@ class ClickerClientAction extends Component {
 
 
     setup() {
-		this.clickService = useState(useService("awesome_clicker.clicker"));
+		this.clicker= useClicker();
     }
 
 }
