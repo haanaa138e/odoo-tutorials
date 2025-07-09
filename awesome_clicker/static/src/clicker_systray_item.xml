@@ -5,6 +5,9 @@
 	        Clicks:
             <t t-esc="state.counter"/>
 	        <i class="fa fa-plus-square m-1 fa-lg" t-on-click="increment"></i>
+	        <button t-on-click="openClicker" class="btn btn-secondary ">
+		        Open
+	        </button>
         </div>
     </t>
 </templates>
