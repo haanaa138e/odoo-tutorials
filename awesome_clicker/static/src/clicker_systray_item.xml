@@ -2,12 +2,16 @@
 <templates xml:space="preserve">
     <t t-name="awesome_clicker.ClickerSystray" >
         <div class="o_systray_item" >
+
 	        Clicks:
-            <t t-esc="state.counter"/>
-	        <i class="fa fa-plus-square m-1 fa-lg" t-on-click="increment"></i>
-	        <button t-on-click="openClicker" class="btn btn-secondary ">
+	        <t t-esc="clickService.state.clicker"/>
+            <button class="btn btn-secondary " t-on-click="() => this.clickService.increment(9)">
+                <i class="fa fa-lg fa-plus"></i>
+            </button>
+	        <button t-on-click="openClicker" class="btn btn-secondary ms-2">
 		        Open
 	        </button>
+
         </div>
     </t>
 </templates>
