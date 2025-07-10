@@ -2,11 +2,12 @@ import { registry } from "@web/core/registry";
 import { Component } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import {useClicker} from "./use_clicker";
+import { ClickerValue } from "./clicker_value"
 
 export class ClickerSystray extends Component {
     static template = "awesome_clicker.ClickerSystray";
     static props = {};
-
+	static components = {ClickerValue};
     setup() {
 		this.action = useService("action")
 		this.clicker= useClicker();

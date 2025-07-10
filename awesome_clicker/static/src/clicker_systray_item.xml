@@ -4,7 +4,8 @@
         <div class="o_systray_item" >
 
 	        Clicks:
-	        <t t-esc="this.clicker.state.clicker"/>
+	        <ClickerValue/>
+
             <button class="btn btn-secondary " t-on-click="() => this.clicker.increment(9)">
                 <i class="fa fa-lg fa-plus"></i>
             </button>
