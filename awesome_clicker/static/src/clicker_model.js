@@ -23,6 +23,26 @@ export class ClickerModel extends Reactive{
 				  purchased: 0,
 			  }
 		  }
+		  this.trees = {
+			  pearTree: {
+				  price: 1000000,
+				  level: 4,
+				  produce: "pear",
+				  purchased: 0,
+			  },
+			  cherryTree: {
+				  price: 1000000,
+				  level: 4,
+				  produce: "cherry",
+				  purchased: 0,
+			  },
+		  }
+		  this.fruits = {
+			  pear: 0,
+			  cherry: 0,
+		  },
+
+
 		  this.multiplier = 1
 
 		  document.addEventListener("click",() => this.increment(1),true);
@@ -31,6 +51,11 @@ export class ClickerModel extends Reactive{
 				this.clicker += this.bots[bot].increment * this.bots[bot].purchased * this.multiplier;
             }
         }, 10000);
+		  setInterval(() => {
+            for (const tree in this.trees) {
+                this.fruits[this.trees[tree].produce] += this.trees[tree].purchased;
+            }
+        }, 30000);
 	  }
 
 	  buyMultiplier() {
@@ -89,6 +114,16 @@ export class ClickerModel extends Reactive{
 		  return choose(availableReward);
 	  }
 
+	  buyTree(name) {
+		  if (!Object.keys(this.trees).includes(name)) {
+			  throw new Error(`Invalid tree name ${name}`);
+		  }
+		  if (this.clicker < this.trees[name].price) {
+			  return false;
+		  }
+		  this.clicker -= this.trees[name].price;
+		  this.trees[name].purchased += 1;
+	  }
 
 
     get milestones() {
@@ -96,6 +131,7 @@ export class ClickerModel extends Reactive{
 		    {clicks: 1000, unlock: "clickbot"},
 		    {clicks: 5000, unlock: "bigbot"},
 		    {clicks: 10000, unlock: "multiplier"},
+		    {clicks: 1000000, unlock: "pear tree & cherry tree" },
 	    ];
     }
 }
