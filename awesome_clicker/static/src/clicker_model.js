@@ -21,13 +21,22 @@ export class ClickerModel extends Reactive{
 				  purchased: 0,
 			  }
 		  }
+		  this.multiplier = 1
 
 		  document.addEventListener("click",() => this.increment(1),true);
 		  setInterval(() => {
             for (const bot in this.bots) {
-                this.clicker += this.bots[bot].increment * this.bots[bot].purchased;
+				this.clicker += this.bots[bot].increment * this.bots[bot].purchased * this.multiplier;
             }
         }, 10000);
+	  }
+
+	  buyMultiplier() {
+		  if (this.clicker < 50000) {
+			  return false;
+		  }
+		  this.clicker -= 50000;
+		  this.multiplier++;
 	  }
 
 
@@ -59,6 +68,7 @@ export class ClickerModel extends Reactive{
 	    return [
 		    {clicks: 1000, unlock: "clickbot"},
 		    {clicks: 5000, unlock: "bigbot"},
+		    {clicks: 10000, unlock: "multiplier"},
 	    ];
     }
 }
