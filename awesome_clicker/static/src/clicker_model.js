@@ -64,7 +64,6 @@ export class ClickerModel extends Reactive{
 	  }
 
 
-
 	  buyBot(name) {
 		  if (!Object.keys(this.bots).includes(name)) {
 			  throw new Error(`Invalid bot name ${name}`);
@@ -85,6 +84,8 @@ export class ClickerModel extends Reactive{
 				  }
 			  }
 		  }
+		  const reward = choose(availableReward);
+		  this.bus.trigger("REWARD", reward);
 		  return choose(availableReward);
 	  }
 
