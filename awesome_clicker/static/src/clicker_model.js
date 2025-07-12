@@ -1,5 +1,7 @@
 import { Reactive } from "@web/core/utils/reactive";
 import { EventBus } from "@odoo/owl";
+import { rewards } from "./click_rewards";
+import { choose } from "./utils";
 
 export class ClickerModel extends Reactive{
 	  constructor() {
@@ -40,17 +42,27 @@ export class ClickerModel extends Reactive{
 	  }
 
 
+
+
 	  increment(inc){
 		  this.clicker += inc;
-		   if (
-			   this.milestones[this.level] &&
-			   this.clicker >= this.milestones[this.level].clicks
-        ) {
-			   this.bus.trigger("MILESTONE", this.milestones[this.level]);
-			   console.log("🚀 Milestone triggered!", this.milestones[this.level]);
-			   this.level += 1;
-		 }
+
+		  while (
+			  this.milestones[this.level] &&
+			  this.clicker >= this.milestones[this.level].clicks
+		  ) {
+			  this.bus.trigger("MILESTONE", this.milestones[this.level]);
+			  console.log("🚀 Milestone triggered!", this.milestones[this.level]);
+			  this.level += 1;
+
+			  const reward = this.giveReward();
+			  if (reward) {
+				  reward.apply(this);
+				  console.log("🎁 Reward received:", reward.description);
+			  }
+		  }
 	  }
+
 
 
 	  buyBot(name) {
@@ -63,6 +75,20 @@ export class ClickerModel extends Reactive{
 		  this.clicker -= this.bots[name].price;
 		  this.bots[name].purchased += 1;
 	  }
+
+	  giveReward() {
+		  const availableReward = [];
+		  for (const reward of rewards) {
+			  if (reward.minLevel <= this.level || !reward.minLevel) {
+				  if (reward.maxLevel >= this.level || !reward.maxLevel) {
+					  availableReward.push(reward);
+				  }
+			  }
+		  }
+		  return choose(availableReward);
+	  }
+
+
 
     get milestones() {
 	    return [
