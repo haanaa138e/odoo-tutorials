@@ -6,33 +6,59 @@ export class ClickerModel extends Reactive{
 		  super();
 		  this.clicker = 0;
 		  this.level = 0;
-		  this.clickBots = 0;
 		  this.bus = new EventBus();
+		  this.bots = {
+			  clickbot: {
+				  price: 1000,
+				  level: 1,
+				  increment: 10,
+				  purchased: 0,
+			  },
+			  bigbot: {
+				  price: 5000,
+				  level: 2,
+				  increment: 100,
+				  purchased: 0,
+			  }
+		  }
 
 		  document.addEventListener("click",() => this.increment(1),true);
 		  setInterval(() => {
-            this.clicker += this.clickBots * 10;
+            for (const bot in this.bots) {
+                this.clicker += this.bots[bot].increment * this.bots[bot].purchased;
+            }
         }, 10000);
 	  }
 
 
 	  increment(inc){
 		  this.clicker += inc;
-
-		  if (this.level < 1 && this.clicker >= 1000) {
-			  this.bus.trigger("MILESTONE_1k");
-			  this.level++;
-		  }
+		   if (
+			   this.milestones[this.level] &&
+			   this.clicker >= this.milestones[this.level].clicks
+        ) {
+			   this.bus.trigger("MILESTONE", this.milestones[this.level]);
+			   console.log("🚀 Milestone triggered!", this.milestones[this.level]);
+			   this.level += 1;
+		 }
 	  }
 
 
-	  buyClickBot() {
-		  const clickBotPrice = 1000;
-		  if (this.clicker < clickBotPrice) {
+	  buyBot(name) {
+		  if (!Object.keys(this.bots).includes(name)) {
+			  throw new Error(`Invalid bot name ${name}`);
+		  }
+		  if (this.clicker < this.bots[name].price) {
 			  return false;
 		  }
-		  this.clicker -= clickBotPrice;
-		  this.clickBots += 1;
+		  this.clicker -= this.bots[name].price;
+		  this.bots[name].purchased += 1;
 	  }
 
+    get milestones() {
+	    return [
+		    {clicks: 1000, unlock: "clickbot"},
+		    {clicks: 5000, unlock: "bigbot"},
+	    ];
+    }
 }
