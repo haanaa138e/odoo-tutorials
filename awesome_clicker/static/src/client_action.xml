@@ -19,7 +19,7 @@
                             <i class="fa fa-android"></i>
                         </div>
                         <div class="card-body">
-                            <button t-on-click="() => this.clicker.buyBot(bot)" class="btn btn-primary" t-att-disabled="this.clicker.clicks lt bot_value.price">
+                            <button t-on-click="() => this.clicker.buyBot(bot)" class="btn btn-primary" t-att-disabled="this.clicker.clicker lt bot_value.price">
                                 Buy <t t-esc="bot"/> (<t t-esc="bot_value.price"/> clicks)
                             </button>
                         </div>
