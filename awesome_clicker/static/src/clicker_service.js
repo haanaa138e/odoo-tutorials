@@ -6,6 +6,7 @@ const clickerService = {
 	dependencies: ["action", "effect", "notification"],
     start(env, services) {
         const clickerModel = new ClickerModel();
+		 // window.clicker = clickerModel;
         const bus = clickerModel.bus
         bus.addEventListener("MILESTONE", (ev) => {
 			console.log("🌈 Got milestone event!", ev.detail);
