@@ -1,12 +1,13 @@
 import { registry } from  "@web/core/registry";
 import { Component } from "@odoo/owl";
 import {useClicker} from "./use_clicker";
-import { ClickerValue } from "./clicker_value"
+import { ClickerValue } from "./clicker_value";
+import {Notebook} from "@web/core/notebook/notebook";
 
 class ClickerClientAction extends Component {
 	 static template = "awesome_clicker.ClickerClientAction";
 	 static props = ["*"];
-	 static components = {ClickerValue};
+	 static components = {ClickerValue,Notebook};
 
     setup() {
 		this.clicker= useClicker();
