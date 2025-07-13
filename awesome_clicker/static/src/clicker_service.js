@@ -1,12 +1,21 @@
 import { registry } from "@web/core/registry";
 import {ClickerModel} from "./clicker_model";
+import { browser } from "@web/core/browser/browser";
 
 const clickerService = {
 
 	dependencies: ["action", "effect", "notification"],
     start(env, services) {
-        const clickerModel = new ClickerModel();
-		// window.clicker = clickerModel;
+		const localState = JSON.parse(browser.localStorage.getItem("clickerState"));
+        const clickerModel = localState ? ClickerModel.fromJSON(localState): new ClickerModel();
+		window.clicker = clickerModel;
+
+	    setInterval(() => {
+            const state = clickerModel.toJSON();
+            browser.localStorage.setItem("clickerState", JSON.stringify(state));
+		}, 10000);
+
+
         const bus = clickerModel.bus
         bus.addEventListener("MILESTONE", (ev) => {
 			console.log("🌈 Got milestone event!", ev.detail);
