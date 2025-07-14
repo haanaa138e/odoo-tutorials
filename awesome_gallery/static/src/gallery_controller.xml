@@ -5,7 +5,7 @@
 
 	    <Layout display="props.display">
 
-			<GalleryRenderer model="model"/>
+		    <t t-component="props.Renderer" model="model"/>
 
         </Layout>
     </t>
